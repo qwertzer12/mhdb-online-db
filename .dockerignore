@@ -1,0 +1,8 @@
+.tmp/
+.cache
+.git
+.env
+.mhdb-data/
+node_modules
+build
+dist
