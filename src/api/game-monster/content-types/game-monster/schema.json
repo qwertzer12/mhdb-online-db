@@ -1,0 +1,68 @@
+{
+  "kind": "collectionType",
+  "collectionName": "game_monsters",
+  "info": {
+    "singularName": "game-monster",
+    "pluralName": "game-monsters",
+    "displayName": "game-monster"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "game": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game.game",
+      "inversedBy": "game_monsters"
+    },
+    "monster": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::monster.monster",
+      "inversedBy": "game_monsters"
+    },
+    "rank": {
+      "type": "enumeration",
+      "enum": [
+        "Low Rank",
+        "High Rank",
+        "G Rank"
+      ]
+    },
+    "threat_level": {
+      "type": "string"
+    },
+    "hp": {
+      "type": "biginteger"
+    },
+    "capture_hp_percent": {
+      "type": "decimal"
+    },
+    "game_monster_weaknesses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-monster-weakness.game-monster-weakness",
+      "mappedBy": "game_monster"
+    },
+    "game_monster_ailments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-monster-ailment.game-monster-ailment",
+      "mappedBy": "game_monster"
+    },
+    "hitzones": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::hitzone.hitzone",
+      "mappedBy": "game_monster"
+    },
+    "game_monster_hitzones": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-monster-hitzone.game-monster-hitzone",
+      "mappedBy": "game_monster"
+    }
+  }
+}

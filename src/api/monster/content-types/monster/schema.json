@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "monsters",
+  "info": {
+    "singularName": "monster",
+    "pluralName": "monsters",
+    "displayName": "monster"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "species": {
+      "type": "enumeration",
+      "enum": [
+        "Elder Dragon",
+        "Flying Wyvern",
+        "Bird Wyvern",
+        "Piscine Wyvern",
+        "Snake Wyvern",
+        "Brute Wyvern",
+        "Fanged Wyvern",
+        "Fanged Beast",
+        "Leviathan",
+        "Carapaceon",
+        "Amphibian",
+        "Temnoceran",
+        "Neopteron",
+        "Herbavore",
+        "Wingdrake",
+        "Cephalopod",
+        "Construct",
+        "Unknown",
+        "Fish",
+        "Lynian"
+      ]
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "game_monsters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-monster.game-monster",
+      "mappedBy": "monster"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "game_monster_hitzones",
+  "info": {
+    "singularName": "game-monster-hitzone",
+    "pluralName": "game-monster-hitzones",
+    "displayName": "game-monster-hitzone"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "game_monster": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game-monster.game-monster",
+      "inversedBy": "game_monster_hitzones"
+    },
+    "hitzone": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::hitzone.hitzone",
+      "inversedBy": "game_monster_hitzones"
+    },
+    "blunt": {
+      "type": "decimal"
+    },
+    "sever": {
+      "type": "decimal"
+    },
+    "shot": {
+      "type": "decimal"
+    },
+    "element_modifier": {
+      "type": "decimal"
+    }
+  }
+}

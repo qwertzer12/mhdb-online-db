@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hitzones",
+  "info": {
+    "singularName": "hitzone",
+    "pluralName": "hitzones",
+    "displayName": "hitzone"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "game_monster": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game-monster.game-monster",
+      "inversedBy": "hitzones"
+    },
+    "area": {
+      "type": "string",
+      "required": true
+    },
+    "game_monster_hitzones": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-monster-hitzone.game-monster-hitzone",
+      "mappedBy": "hitzone"
+    }
+  }
+}

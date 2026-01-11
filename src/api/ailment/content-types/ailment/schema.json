@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ailments",
+  "info": {
+    "singularName": "ailment",
+    "pluralName": "ailments",
+    "displayName": "ailment"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "game_monster_ailments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-monster-ailment.game-monster-ailment",
+      "mappedBy": "ailment"
+    }
+  }
+}

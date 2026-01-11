@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "games",
+  "info": {
+    "singularName": "game",
+    "pluralName": "games",
+    "displayName": "game"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "name_short": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "generation": {
+      "type": "integer"
+    },
+    "release_date": {
+      "type": "date"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "game_monsters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-monster.game-monster",
+      "mappedBy": "game"
+    }
+  }
+}

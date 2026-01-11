@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "game_monster_weaknesses",
+  "info": {
+    "singularName": "game-monster-weakness",
+    "pluralName": "game-monster-weaknesses",
+    "displayName": "game-monster-weakness"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "game_monster": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game-monster.game-monster",
+      "inversedBy": "game_monster_weaknesses"
+    },
+    "element": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::element.element",
+      "inversedBy": "game_monster_weaknesses"
+    },
+    "value": {
+      "type": "decimal",
+      "required": true,
+      "unique": false
+    }
+  }
+}

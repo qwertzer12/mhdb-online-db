@@ -430,33 +430,353 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiMhGameMhGame extends Struct.CollectionTypeSchema {
-  collectionName: 'mh_games';
+export interface ApiAilmentAilment extends Struct.CollectionTypeSchema {
+  collectionName: 'ailments';
   info: {
-    displayName: 'mh_game';
-    pluralName: 'mh-games';
-    singularName: 'mh-game';
+    displayName: 'ailment';
+    pluralName: 'ailments';
+    singularName: 'ailment';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    code: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    generation: Schema.Attribute.Integer;
+    description: Schema.Attribute.Blocks;
+    game_monster_ailments: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster-ailment.game-monster-ailment'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::mh-game.mh-game'
+      'api::ailment.ailment'
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    published: Schema.Attribute.Date;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiElementElement extends Struct.CollectionTypeSchema {
+  collectionName: 'elements';
+  info: {
+    displayName: 'element';
+    pluralName: 'elements';
+    singularName: 'element';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks;
+    game_monster_weaknesses: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster-weakness.game-monster-weakness'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::element.element'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGameMonsterAilmentGameMonsterAilment
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'game_monster_ailments';
+  info: {
+    displayName: 'game-monster-ailment';
+    pluralName: 'game-monster-ailments';
+    singularName: 'game-monster-ailment';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    ailment: Schema.Attribute.Relation<'manyToOne', 'api::ailment.ailment'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    game_monster: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::game-monster.game-monster'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster-ailment.game-monster-ailment'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGameMonsterHitzoneGameMonsterHitzone
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'game_monster_hitzones';
+  info: {
+    displayName: 'game-monster-hitzone';
+    pluralName: 'game-monster-hitzones';
+    singularName: 'game-monster-hitzone';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    blunt: Schema.Attribute.Decimal;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    element_modifier: Schema.Attribute.Decimal;
+    game_monster: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::game-monster.game-monster'
+    >;
+    hitzone: Schema.Attribute.Relation<'manyToOne', 'api::hitzone.hitzone'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster-hitzone.game-monster-hitzone'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sever: Schema.Attribute.Decimal;
+    shot: Schema.Attribute.Decimal;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGameMonsterWeaknessGameMonsterWeakness
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'game_monster_weaknesses';
+  info: {
+    displayName: 'game-monster-weakness';
+    pluralName: 'game-monster-weaknesses';
+    singularName: 'game-monster-weakness';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    element: Schema.Attribute.Relation<'manyToOne', 'api::element.element'>;
+    game_monster: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::game-monster.game-monster'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster-weakness.game-monster-weakness'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    value: Schema.Attribute.Decimal & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiGameMonsterGameMonster extends Struct.CollectionTypeSchema {
+  collectionName: 'game_monsters';
+  info: {
+    displayName: 'game-monster';
+    pluralName: 'game-monsters';
+    singularName: 'game-monster';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    capture_hp_percent: Schema.Attribute.Decimal;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    game: Schema.Attribute.Relation<'manyToOne', 'api::game.game'>;
+    game_monster_ailments: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster-ailment.game-monster-ailment'
+    >;
+    game_monster_hitzones: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster-hitzone.game-monster-hitzone'
+    >;
+    game_monster_weaknesses: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster-weakness.game-monster-weakness'
+    >;
+    hitzones: Schema.Attribute.Relation<'oneToMany', 'api::hitzone.hitzone'>;
+    hp: Schema.Attribute.BigInteger;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster.game-monster'
+    > &
+      Schema.Attribute.Private;
+    monster: Schema.Attribute.Relation<'manyToOne', 'api::monster.monster'>;
+    publishedAt: Schema.Attribute.DateTime;
+    rank: Schema.Attribute.Enumeration<['Low Rank', 'High Rank', 'G Rank']>;
+    threat_level: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGameGame extends Struct.CollectionTypeSchema {
+  collectionName: 'games';
+  info: {
+    displayName: 'game';
+    pluralName: 'games';
+    singularName: 'game';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks;
+    game_monsters: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster.game-monster'
+    >;
+    generation: Schema.Attribute.Integer;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::game.game'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    name_short: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    release_date: Schema.Attribute.Date;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHitzoneHitzone extends Struct.CollectionTypeSchema {
+  collectionName: 'hitzones';
+  info: {
+    displayName: 'hitzone';
+    pluralName: 'hitzones';
+    singularName: 'hitzone';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    area: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    game_monster: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::game-monster.game-monster'
+    >;
+    game_monster_hitzones: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster-hitzone.game-monster-hitzone'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hitzone.hitzone'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMonsterMonster extends Struct.CollectionTypeSchema {
+  collectionName: 'monsters';
+  info: {
+    displayName: 'monster';
+    pluralName: 'monsters';
+    singularName: 'monster';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks;
+    game_monsters: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster.game-monster'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::monster.monster'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    species: Schema.Attribute.Enumeration<
+      [
+        'Elder Dragon',
+        'Flying Wyvern',
+        'Bird Wyvern',
+        'Piscine Wyvern',
+        'Snake Wyvern',
+        'Brute Wyvern',
+        'Fanged Wyvern',
+        'Fanged Beast',
+        'Leviathan',
+        'Carapaceon',
+        'Amphibian',
+        'Temnoceran',
+        'Neopteron',
+        'Herbavore',
+        'Wingdrake',
+        'Cephalopod',
+        'Construct',
+        'Unknown',
+        'Fish',
+        'Lynian',
+      ]
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -973,7 +1293,15 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::mh-game.mh-game': ApiMhGameMhGame;
+      'api::ailment.ailment': ApiAilmentAilment;
+      'api::element.element': ApiElementElement;
+      'api::game-monster-ailment.game-monster-ailment': ApiGameMonsterAilmentGameMonsterAilment;
+      'api::game-monster-hitzone.game-monster-hitzone': ApiGameMonsterHitzoneGameMonsterHitzone;
+      'api::game-monster-weakness.game-monster-weakness': ApiGameMonsterWeaknessGameMonsterWeakness;
+      'api::game-monster.game-monster': ApiGameMonsterGameMonster;
+      'api::game.game': ApiGameGame;
+      'api::hitzone.hitzone': ApiHitzoneHitzone;
+      'api::monster.monster': ApiMonsterMonster;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

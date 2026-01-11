@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "game_monster_ailments",
+  "info": {
+    "singularName": "game-monster-ailment",
+    "pluralName": "game-monster-ailments",
+    "displayName": "game-monster-ailment"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ailment": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ailment.ailment",
+      "inversedBy": "game_monster_ailments"
+    },
+    "game_monster": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game-monster.game-monster",
+      "inversedBy": "game_monster_ailments"
+    }
+  }
+}
