@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ranks",
+  "info": {
+    "singularName": "rank",
+    "pluralName": "ranks",
+    "displayName": "rank"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "game_ranks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-rank.game-rank",
+      "mappedBy": "rank"
+    }
+  }
+}

@@ -34,6 +34,9 @@
     },
     "element_modifier": {
       "type": "decimal"
+    },
+    "severable": {
+      "type": "boolean"
     }
   }
 }

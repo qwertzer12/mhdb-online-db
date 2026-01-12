@@ -49,6 +49,18 @@
       "relation": "oneToMany",
       "target": "api::game-monster.game-monster",
       "mappedBy": "monster"
+    },
+    "higher_form": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::monster.monster",
+      "inversedBy": "lower_form"
+    },
+    "lower_form": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::monster.monster",
+      "mappedBy": "higher_form"
     }
   }
 }

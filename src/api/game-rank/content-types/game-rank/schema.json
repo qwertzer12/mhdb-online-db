@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "game_ranks",
+  "info": {
+    "singularName": "game-rank",
+    "pluralName": "game-ranks",
+    "displayName": "game-rank"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Identifier": {
+      "type": "string",
+      "private": true,
+      "required": true,
+      "unique": true
+    },
+    "game": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game.game",
+      "inversedBy": "game_ranks"
+    },
+    "game_monsters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-monster.game-monster",
+      "mappedBy": "game_rank"
+    },
+    "game_quests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-quest.game-quest",
+      "mappedBy": "game_rank"
+    },
+    "rank": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::rank.rank",
+      "inversedBy": "game_ranks"
+    },
+    "levels": {
+      "type": "string"
+    }
+  }
+}

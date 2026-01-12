@@ -23,13 +23,11 @@
       "target": "api::monster.monster",
       "inversedBy": "game_monsters"
     },
-    "rank": {
-      "type": "enumeration",
-      "enum": [
-        "Low Rank",
-        "High Rank",
-        "G Rank"
-      ]
+    "game_rank": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game-rank.game-rank",
+      "inversedBy": "game_monsters"
     },
     "threat_level": {
       "type": "string"
@@ -52,17 +50,17 @@
       "target": "api::game-monster-ailment.game-monster-ailment",
       "mappedBy": "game_monster"
     },
-    "hitzones": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::hitzone.hitzone",
-      "mappedBy": "game_monster"
-    },
     "game_monster_hitzones": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::game-monster-hitzone.game-monster-hitzone",
       "mappedBy": "game_monster"
+    },
+    "game_quests": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::game-quest.game-quest",
+      "inversedBy": "game_monsters"
     }
   }
 }

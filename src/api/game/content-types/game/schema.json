@@ -45,6 +45,24 @@
       "relation": "oneToMany",
       "target": "api::game-monster.game-monster",
       "mappedBy": "game"
+    },
+    "game_ranks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-rank.game-rank",
+      "mappedBy": "game"
+    },
+    "game_quests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-quest.game-quest",
+      "mappedBy": "game"
+    },
+    "game_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-item.game-item",
+      "mappedBy": "game"
     }
   }
 }

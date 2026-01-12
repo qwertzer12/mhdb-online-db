@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "game_quests",
+  "info": {
+    "singularName": "game-quest",
+    "pluralName": "game-quests",
+    "displayName": "game-quest"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "game": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game.game",
+      "inversedBy": "game_quests"
+    },
+    "game_rank": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game-rank.game-rank",
+      "inversedBy": "game_quests"
+    },
+    "type": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::quest.quest",
+      "inversedBy": "game_quests"
+    },
+    "game_monsters": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::game-monster.game-monster",
+      "mappedBy": "game_quests"
+    },
+    "money_cost": {
+      "type": "biginteger"
+    },
+    "money_reward": {
+      "type": "biginteger"
+    },
+    "required": {
+      "type": "boolean"
+    }
+  }
+}

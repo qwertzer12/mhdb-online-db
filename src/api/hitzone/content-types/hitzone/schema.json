@@ -11,12 +11,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "game_monster": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::game-monster.game-monster",
-      "inversedBy": "hitzones"
-    },
     "area": {
       "type": "string",
       "required": true

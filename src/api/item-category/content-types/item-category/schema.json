@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "item_categories",
+  "info": {
+    "singularName": "item-category",
+    "pluralName": "item-categories",
+    "displayName": "item-category"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "game_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::game-item.game-item",
+      "mappedBy": "item_category"
+    }
+  }
+}

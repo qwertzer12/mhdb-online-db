@@ -500,6 +500,38 @@ export interface ApiElementElement extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiGameItemGameItem extends Struct.CollectionTypeSchema {
+  collectionName: 'game_items';
+  info: {
+    displayName: 'game-item';
+    pluralName: 'game-items';
+    singularName: 'game-item';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    game: Schema.Attribute.Relation<'manyToOne', 'api::game.game'>;
+    item_category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::item-category.item-category'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-item.game-item'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGameMonsterAilmentGameMonsterAilment
   extends Struct.CollectionTypeSchema {
   collectionName: 'game_monster_ailments';
@@ -563,6 +595,7 @@ export interface ApiGameMonsterHitzoneGameMonsterHitzone
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     sever: Schema.Attribute.Decimal;
+    severable: Schema.Attribute.Boolean;
     shot: Schema.Attribute.Decimal;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -632,7 +665,14 @@ export interface ApiGameMonsterGameMonster extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::game-monster-weakness.game-monster-weakness'
     >;
-    hitzones: Schema.Attribute.Relation<'oneToMany', 'api::hitzone.hitzone'>;
+    game_quests: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::game-quest.game-quest'
+    >;
+    game_rank: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::game-rank.game-rank'
+    >;
     hp: Schema.Attribute.BigInteger;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -642,8 +682,92 @@ export interface ApiGameMonsterGameMonster extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     monster: Schema.Attribute.Relation<'manyToOne', 'api::monster.monster'>;
     publishedAt: Schema.Attribute.DateTime;
-    rank: Schema.Attribute.Enumeration<['Low Rank', 'High Rank', 'G Rank']>;
     threat_level: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGameQuestGameQuest extends Struct.CollectionTypeSchema {
+  collectionName: 'game_quests';
+  info: {
+    displayName: 'game-quest';
+    pluralName: 'game-quests';
+    singularName: 'game-quest';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    game: Schema.Attribute.Relation<'manyToOne', 'api::game.game'>;
+    game_monsters: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::game-monster.game-monster'
+    >;
+    game_rank: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::game-rank.game-rank'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-quest.game-quest'
+    > &
+      Schema.Attribute.Private;
+    money_cost: Schema.Attribute.BigInteger;
+    money_reward: Schema.Attribute.BigInteger;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    required: Schema.Attribute.Boolean;
+    type: Schema.Attribute.Relation<'manyToOne', 'api::quest.quest'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGameRankGameRank extends Struct.CollectionTypeSchema {
+  collectionName: 'game_ranks';
+  info: {
+    displayName: 'game-rank';
+    pluralName: 'game-ranks';
+    singularName: 'game-rank';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    game: Schema.Attribute.Relation<'manyToOne', 'api::game.game'>;
+    game_monsters: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-monster.game-monster'
+    >;
+    game_quests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-quest.game-quest'
+    >;
+    Identifier: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private &
+      Schema.Attribute.Unique;
+    levels: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-rank.game-rank'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    rank: Schema.Attribute.Relation<'manyToOne', 'api::rank.rank'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -666,9 +790,21 @@ export interface ApiGameGame extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Blocks;
+    game_items: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-item.game-item'
+    >;
     game_monsters: Schema.Attribute.Relation<
       'oneToMany',
       'api::game-monster.game-monster'
+    >;
+    game_quests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-quest.game-quest'
+    >;
+    game_ranks: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-rank.game-rank'
     >;
     generation: Schema.Attribute.Integer;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -703,10 +839,6 @@ export interface ApiHitzoneHitzone extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    game_monster: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::game-monster.game-monster'
-    >;
     game_monster_hitzones: Schema.Attribute.Relation<
       'oneToMany',
       'api::game-monster-hitzone.game-monster-hitzone'
@@ -718,6 +850,41 @@ export interface ApiHitzoneHitzone extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiItemCategoryItemCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'item_categories';
+  info: {
+    displayName: 'item-category';
+    pluralName: 'item-categories';
+    singularName: 'item-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    game_items: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-item.game-item'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::item-category.item-category'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    type: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -743,12 +910,17 @@ export interface ApiMonsterMonster extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::game-monster.game-monster'
     >;
+    higher_form: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::monster.monster'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::monster.monster'
     > &
       Schema.Attribute.Private;
+    lower_form: Schema.Attribute.Relation<'manyToMany', 'api::monster.monster'>;
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
@@ -777,6 +949,66 @@ export interface ApiMonsterMonster extends Struct.CollectionTypeSchema {
         'Lynian',
       ]
     >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiQuestQuest extends Struct.CollectionTypeSchema {
+  collectionName: 'quests';
+  info: {
+    displayName: 'quest';
+    pluralName: 'quests';
+    singularName: 'quest';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    game_quests: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-quest.game-quest'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::quest.quest'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    type: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiRankRank extends Struct.CollectionTypeSchema {
+  collectionName: 'ranks';
+  info: {
+    displayName: 'rank';
+    pluralName: 'ranks';
+    singularName: 'rank';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    game_ranks: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-rank.game-rank'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::rank.rank'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1295,13 +1527,19 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::ailment.ailment': ApiAilmentAilment;
       'api::element.element': ApiElementElement;
+      'api::game-item.game-item': ApiGameItemGameItem;
       'api::game-monster-ailment.game-monster-ailment': ApiGameMonsterAilmentGameMonsterAilment;
       'api::game-monster-hitzone.game-monster-hitzone': ApiGameMonsterHitzoneGameMonsterHitzone;
       'api::game-monster-weakness.game-monster-weakness': ApiGameMonsterWeaknessGameMonsterWeakness;
       'api::game-monster.game-monster': ApiGameMonsterGameMonster;
+      'api::game-quest.game-quest': ApiGameQuestGameQuest;
+      'api::game-rank.game-rank': ApiGameRankGameRank;
       'api::game.game': ApiGameGame;
       'api::hitzone.hitzone': ApiHitzoneHitzone;
+      'api::item-category.item-category': ApiItemCategoryItemCategory;
       'api::monster.monster': ApiMonsterMonster;
+      'api::quest.quest': ApiQuestQuest;
+      'api::rank.rank': ApiRankRank;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
