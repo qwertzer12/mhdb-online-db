@@ -6,7 +6,7 @@ services:
     environment:
       DATABASE_CLIENT: ${DATABASE_CLIENT}
       DATABASE_HOST: ${DATABASE_HOST}
-      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_PORT: 5432
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
@@ -20,8 +20,7 @@ services:
     ports:
       - "${MHDB_PORT}:${MHDB_PORT}"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     networks:
       - mhdb-network
 
@@ -32,17 +31,10 @@ services:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
-    ports:
-      - "${DATABASE_PORT}:${DATABASE_PORT}"
     volumes:
       - ./mhdb-data:/var/lib/postgresql/data
     networks:
       - mhdb-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U strapi -d strapi"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
 networks:
   mhdb-network:
